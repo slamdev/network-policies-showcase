@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: np-service
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector:
+    app: np-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: np-service
+spec:
+  selector:
+    matchLabels:
+      app: np-service
+  template:
+    metadata:
+      labels:
+        app: np-service
+    spec:
+      containers:
+        - name: app
+          image: nginx
+          ports:
+            - name: http
+              containerPort: 80
